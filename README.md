@@ -1,6 +1,6 @@
 # Gilberto Gonzalez Portfolio
 
-Personal portfolio for Gilberto Gonzalez, Senior Full Stack & AI Systems Engineer.
+Personal bilingual portfolio for Gilberto Gonzalez, Senior Full Stack & AI Systems Engineer.
 
 ## Stack
 
@@ -8,6 +8,14 @@ Personal portfolio for Gilberto Gonzalez, Senior Full Stack & AI Systems Enginee
 - TypeScript
 - Vite
 - CSS
+
+## Content
+
+- English and Spanish language switcher
+- Language-specific CV downloads:
+  - English: `public/CV_GilbertoGonzalez.pdf`
+  - Spanish: `public/CV_Gilberto_Gonzalez.pdf`
+- Expanded work, capabilities, experience, technical stack and education sections
 
 ## Local Development
 
@@ -34,4 +42,3 @@ Recommended flow:
 4. Use Vercel's default Vite settings:
    - Build command: `npm run build`
    - Output directory: `dist`
-
