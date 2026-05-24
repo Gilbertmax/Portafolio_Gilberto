@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 type Language = 'en' | 'es'
+type Theme = 'light' | 'dark'
 
 const cvLinks = {
   en: '/CV_GilbertoGonzalez.pdf',
@@ -24,6 +25,27 @@ const content = {
       'I design and build scalable web platforms, AI-assisted workflows, automation tools, SaaS foundations and production cloud applications for teams that need software to move operational and financial data with precision.',
     primaryCta: 'Start a conversation',
     cvCta: 'Download English CV',
+    profileHighlights: [
+      {
+        label: 'Product to production',
+        text: 'I can connect UI, API, database, automation and deployment decisions in one technical direction.',
+      },
+      {
+        label: 'Operations-first thinking',
+        text: 'Most of my work improves real processes: reporting, fiscal validation, CRM workflows, dashboards and file handling.',
+      },
+      {
+        label: 'AI with practical edges',
+        text: 'I use AI where it reduces friction: query helpers, chatbot flows, document extraction and reporting automation.',
+      },
+    ],
+    carousel: {
+      previous: 'Previous projects',
+      next: 'Next projects',
+      page: 'Project page',
+      showing: 'Showing',
+      of: 'of',
+    },
     panelTop: ['systems map', 'production-ready'],
     pipeline: ['Web platforms', 'AI workflows', 'Data automation', 'Cloud delivery'],
     intro:
@@ -188,6 +210,27 @@ const content = {
       'Diseño y construyo plataformas web escalables, flujos asistidos por IA, herramientas de automatización, bases SaaS y aplicaciones cloud en producción para equipos que necesitan mover datos operativos y financieros con precisión.',
     primaryCta: 'Iniciar conversación',
     cvCta: 'Descargar CV en español',
+    profileHighlights: [
+      {
+        label: 'De producto a producción',
+        text: 'Puedo conectar UI, API, base de datos, automatización y despliegue en una sola dirección técnica.',
+      },
+      {
+        label: 'Pensamiento operativo',
+        text: 'Gran parte de mi trabajo mejora procesos reales: reportes, validación fiscal, CRM, dashboards y manejo de archivos.',
+      },
+      {
+        label: 'IA con aplicación práctica',
+        text: 'Uso IA donde reduce fricción: asistentes de consulta, chatbots, extracción documental y automatización de reportes.',
+      },
+    ],
+    carousel: {
+      previous: 'Proyectos anteriores',
+      next: 'Proyectos siguientes',
+      page: 'Página de proyectos',
+      showing: 'Mostrando',
+      of: 'de',
+    },
     panelTop: ['mapa de sistemas', 'listo para producción'],
     pipeline: ['Plataformas web', 'Flujos con IA', 'Automatización de datos', 'Entrega cloud'],
     intro:
@@ -341,7 +384,25 @@ const content = {
 
 function App() {
   const [language, setLanguage] = useState<Language>('en')
+  const [theme, setTheme] = useState<Theme>('dark')
+  const [projectPage, setProjectPage] = useState(0)
+  const [capabilityIndex, setCapabilityIndex] = useState(0)
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false)
   const t = content[language]
+  const projectPageSize = 2
+  const projectPages = useMemo(() => {
+    return Array.from({ length: Math.ceil(t.projects.length / projectPageSize) }, (_, pageIndex) =>
+      t.projects.slice(pageIndex * projectPageSize, pageIndex * projectPageSize + projectPageSize),
+    )
+  }, [t.projects])
+  const projectPageCount = projectPages.length
+  const activeCapability = t.capabilities[capabilityIndex]
+
+  const changeLanguage = (nextLanguage: Language) => {
+    setLanguage(nextLanguage)
+    setProjectPage(0)
+    setCapabilityIndex(0)
+  }
 
   useEffect(() => {
     document.documentElement.lang = language
@@ -350,6 +411,22 @@ function App() {
         ? 'Gilberto Gonzalez | Full Stack & AI Systems Engineer'
         : 'Gilberto Gonzalez | Ingeniero Full Stack & Sistemas IA'
   }, [language])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
+  useEffect(() => {
+    if (isCarouselPaused || projectPageCount <= 1) {
+      return
+    }
+
+    const intervalId = window.setInterval(() => {
+      setProjectPage((page) => (page + 1) % projectPageCount)
+    }, 5200)
+
+    return () => window.clearInterval(intervalId)
+  }, [isCarouselPaused, projectPageCount])
 
   return (
     <>
@@ -370,11 +447,19 @@ function App() {
             <a href="#contact">{t.nav[4]}</a>
           </nav>
           <div className="language-switcher" aria-label={t.aria.language}>
-            <button type="button" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>
+            <button type="button" aria-pressed={language === 'en'} onClick={() => changeLanguage('en')}>
               EN
             </button>
-            <button type="button" aria-pressed={language === 'es'} onClick={() => setLanguage('es')}>
+            <button type="button" aria-pressed={language === 'es'} onClick={() => changeLanguage('es')}>
               ES
+            </button>
+          </div>
+          <div className="theme-switcher" aria-label={language === 'en' ? 'Theme selector' : 'Selector de tema'}>
+            <button type="button" aria-pressed={theme === 'light'} onClick={() => setTheme('light')}>
+              {language === 'en' ? 'Light' : 'Claro'}
+            </button>
+            <button type="button" aria-pressed={theme === 'dark'} onClick={() => setTheme('dark')}>
+              {language === 'en' ? 'Dark' : 'Oscuro'}
             </button>
           </div>
         </div>
@@ -424,29 +509,90 @@ function App() {
           <p>{t.intro}</p>
         </section>
 
+        <section className="profile-strip section-shell" aria-label={language === 'en' ? 'Profile highlights' : 'Puntos clave del perfil'}>
+          {t.profileHighlights.map((item, index) => (
+            <article className="profile-note" key={item.label}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h2>{item.label}</h2>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </section>
+
         <section className="section-shell section-block" id="work">
-          <div className="section-heading">
-            <span>{t.workLabel}</span>
-            <h2>{t.workTitle}</h2>
+          <div className="section-heading section-heading-with-controls">
+            <div>
+              <span>{t.workLabel}</span>
+              <h2>{t.workTitle}</h2>
+            </div>
+            <div className="carousel-controls" aria-label={language === 'en' ? 'Project carousel controls' : 'Controles del carrusel de proyectos'}>
+              <p>
+                {t.carousel.showing} {projectPage + 1} {t.carousel.of} {projectPageCount}
+              </p>
+              <div>
+                <button
+                  type="button"
+                  aria-label={t.carousel.previous}
+                  onClick={() => setProjectPage((page) => (page === 0 ? projectPageCount - 1 : page - 1))}
+                >
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M15 5 8 12l7 7" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  aria-label={t.carousel.next}
+                  onClick={() => setProjectPage((page) => (page + 1) % projectPageCount)}
+                >
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="m9 5 7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="project-grid">
-            {t.projects.map((project) => (
-              <article className="project-card" key={project.title}>
-                <div>
-                  <p>{project.type}</p>
-                  <h3>{project.title}</h3>
-                </div>
-                <p>{project.description}</p>
-                <div className="impact">
-                  <strong>{language === 'en' ? 'Impact' : 'Impacto'}</strong>
-                  <span>{project.impact}</span>
-                </div>
-                <ul aria-label={`${project.title} stack`}>
-                  {project.stack.map((item) => (
-                    <li key={item}>{item}</li>
+          <div
+            className="project-carousel"
+            aria-live="polite"
+            onMouseEnter={() => setIsCarouselPaused(true)}
+            onMouseLeave={() => setIsCarouselPaused(false)}
+            onFocus={() => setIsCarouselPaused(true)}
+            onBlur={() => setIsCarouselPaused(false)}
+          >
+            <div className="project-track" style={{ transform: `translateX(-${projectPage * 100}%)` }}>
+              {projectPages.map((page, pageIndex) => (
+                <div className="project-slide" key={pageIndex} aria-hidden={projectPage !== pageIndex}>
+                  {page.map((project) => (
+                    <article className="project-card" key={project.title}>
+                      <div>
+                        <p>{project.type}</p>
+                        <h3>{project.title}</h3>
+                      </div>
+                      <p>{project.description}</p>
+                      <div className="impact">
+                        <strong>{language === 'en' ? 'Impact' : 'Impacto'}</strong>
+                        <span>{project.impact}</span>
+                      </div>
+                      <ul aria-label={`${project.title} stack`}>
+                        {project.stack.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </article>
                   ))}
-                </ul>
-              </article>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="pagination-dots" aria-label={language === 'en' ? 'Project pagination' : 'Paginación de proyectos'}>
+            {Array.from({ length: projectPageCount }, (_, index) => (
+              <button
+                type="button"
+                key={index}
+                aria-label={`${t.carousel.page} ${index + 1}`}
+                aria-current={projectPage === index ? 'page' : undefined}
+                onClick={() => setProjectPage(index)}
+              />
             ))}
           </div>
         </section>
@@ -456,7 +602,32 @@ function App() {
             <span>{t.capabilitiesLabel}</span>
             <h2>{t.capabilitiesTitle}</h2>
           </div>
-          <div className="capability-grid">
+          <div className="capability-showcase">
+            <div className="capability-rail" aria-label={language === 'en' ? 'Capability selector' : 'Selector de capacidades'}>
+              {t.capabilities.map((capability, index) => (
+                <button
+                  type="button"
+                  key={capability.title}
+                  aria-pressed={capabilityIndex === index}
+                  onClick={() => setCapabilityIndex(index)}
+                >
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  {capability.title}
+                </button>
+              ))}
+            </div>
+            <article className="capability-feature" aria-live="polite">
+              <p>{language === 'en' ? 'Current focus' : 'Enfoque actual'}</p>
+              <h3>{activeCapability.title}</h3>
+              <span>{activeCapability.text}</span>
+              <ul>
+                {activeCapability.proof.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+          <div className="capability-grid" aria-label={language === 'en' ? 'All capabilities' : 'Todas las capacidades'}>
             {t.capabilities.map((capability) => (
               <article className="capability-card" key={capability.title}>
                 <h3>{capability.title}</h3>
