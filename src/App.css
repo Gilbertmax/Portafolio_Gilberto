@@ -68,8 +68,7 @@ nav a:hover,
   color: var(--accent);
 }
 
-.language-switcher,
-.theme-switcher {
+.language-switcher {
   display: inline-flex;
   min-height: 38px;
   padding: 3px;
@@ -78,8 +77,7 @@ nav a:hover,
   background: var(--surface-raised);
 }
 
-.language-switcher button,
-.theme-switcher button {
+.language-switcher button {
   min-width: 42px;
   padding: 0 12px;
   border: 0;
@@ -90,10 +88,100 @@ nav a:hover,
   font-weight: 800;
 }
 
-.language-switcher button[aria-pressed='true'],
-.theme-switcher button[aria-pressed='true'] {
+.language-switcher button[aria-pressed='true'] {
   background: var(--text);
   color: var(--background);
+}
+
+.theme-toggle {
+  width: 94px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+  border-radius: 999px;
+  background: transparent;
+}
+
+.theme-toggle-track {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 24% 28%, rgba(255, 255, 255, 0.75), transparent 18%),
+    #d9d9ee;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  transition:
+    background 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(9, 9, 11, 0.18);
+  transition:
+    background 240ms ease,
+    box-shadow 240ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.theme-toggle[data-theme-state='dark'] .theme-toggle-track {
+  background:
+    radial-gradient(circle at 78% 28%, rgba(96, 165, 250, 0.26), transparent 18%),
+    #d7d8ef;
+}
+
+.theme-toggle[data-theme-state='dark'] .theme-toggle-thumb {
+  background: #05070c;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.36);
+  transform: translateX(46px);
+}
+
+.sun-cloud-icon,
+.moon-icon {
+  width: 31px;
+  height: 31px;
+}
+
+.sun-cloud-icon circle {
+  fill: #ffffff;
+  stroke: #09090b;
+  stroke-width: 2.4;
+}
+
+.sun-cloud-icon path {
+  fill: none;
+  stroke: #09090b;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.6;
+}
+
+.sun-cloud-icon path:last-child {
+  fill: #09090b;
+  stroke: #09090b;
+}
+
+.moon-icon circle {
+  fill: #05070c;
+}
+
+.moon-icon path:first-of-type {
+  fill: #ffffff;
+}
+
+.moon-icon path:not(:first-of-type) {
+  fill: #ffffff;
 }
 
 .section-shell {
