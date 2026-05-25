@@ -48,6 +48,14 @@ const content = {
     },
     panelTop: ['systems map', 'production-ready'],
     pipeline: ['Web platforms', 'AI workflows', 'Data automation', 'Cloud delivery'],
+    systemCards: [
+      { title: 'Frontend', detail: 'React / Tailwind / UX' },
+      { title: 'Backend', detail: 'Python / Node / APIs' },
+      { title: 'Data', detail: 'SQL / Supabase / BI' },
+      { title: 'AI Systems', detail: 'OpenAI / Chatbots / Reports' },
+      { title: 'Automation', detail: 'Excel / PDF / Scraping' },
+      { title: 'Cloud', detail: 'AWS / Docker / Linux' },
+    ],
     intro:
       'Based in Jalisco, Mexico, I connect product engineering, backend architecture, AI automation, data workflows and Unix/Linux infrastructure into systems that are practical, measurable and maintainable.',
     workLabel: 'Selected work',
@@ -233,6 +241,14 @@ const content = {
     },
     panelTop: ['mapa de sistemas', 'listo para producción'],
     pipeline: ['Plataformas web', 'Flujos con IA', 'Automatización de datos', 'Entrega cloud'],
+    systemCards: [
+      { title: 'Frontend', detail: 'React / Tailwind / UX' },
+      { title: 'Backend', detail: 'Python / Node / APIs' },
+      { title: 'Datos', detail: 'SQL / Supabase / BI' },
+      { title: 'Sistemas IA', detail: 'OpenAI / Chatbots / Reportes' },
+      { title: 'Automatización', detail: 'Excel / PDF / Scraping' },
+      { title: 'Cloud', detail: 'AWS / Docker / Linux' },
+    ],
     intro:
       'Desde Jalisco, México, conecto ingeniería de producto, arquitectura backend, automatización con IA, flujos de datos e infraestructura Unix/Linux en sistemas prácticos, medibles y mantenibles.',
     workLabel: 'Trabajo seleccionado',
@@ -505,13 +521,21 @@ function App() {
               <span>{t.panelTop[0]}</span>
               <span>{t.panelTop[1]}</span>
             </div>
-            <div className="signal-grid" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
+            <div className="profile-module">
+              <img src="/yo.png" alt={language === 'en' ? 'Gilberto Gonzalez portrait' : 'Retrato de Gilberto Gonzalez'} />
+              <div>
+                <strong>{t.name}</strong>
+                <span>{language === 'en' ? 'Full stack systems builder' : 'Constructor de sistemas full stack'}</span>
+              </div>
+            </div>
+            <div className="signal-grid">
+              {t.systemCards.map((card, index) => (
+                <article className="signal-card" key={card.title}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <h2>{card.title}</h2>
+                  <p>{card.detail}</p>
+                </article>
+              ))}
             </div>
             <div className="pipeline">
               {t.pipeline.map((item, index) => (
