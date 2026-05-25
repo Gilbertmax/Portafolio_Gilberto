@@ -281,14 +281,27 @@ nav a:hover,
 
 .system-panel {
   position: relative;
-  overflow: hidden;
+  isolation: isolate;
+  overflow: visible;
   min-height: 560px;
   padding: clamp(24px, 4vw, 34px);
   background: var(--panel-bg);
   border: 1px solid rgba(147, 197, 253, 0.12);
   border-radius: 4px;
   color: #fafafa;
-  box-shadow: none;
+  transform: perspective(1200px) rotateY(-3deg) rotateX(1deg);
+  transform-style: preserve-3d;
+}
+
+.system-panel::before {
+  position: absolute;
+  inset: 18px -18px -18px 18px;
+  z-index: -1;
+  content: '';
+  background: rgba(96, 165, 250, 0.08);
+  border: 1px solid rgba(147, 197, 253, 0.14);
+  border-radius: 4px;
+  transform: translateZ(-70px);
 }
 
 .system-panel::after {
@@ -320,6 +333,7 @@ nav a:hover,
   padding: 0 0 24px;
   border-bottom: 1px solid rgba(250, 250, 250, 0.16);
   background: transparent;
+  transform: translateZ(34px);
 }
 
 .profile-module img {
@@ -329,6 +343,7 @@ nav a:hover,
   object-position: 50% 34%;
   border: 1px solid rgba(147, 197, 253, 0.68);
   border-radius: 4px;
+  box-shadow: 8px 8px 0 rgba(96, 165, 250, 0.14);
 }
 
 .profile-module div {
@@ -356,6 +371,7 @@ nav a:hover,
   margin: 0 0 24px;
   border-top: 1px solid rgba(250, 250, 250, 0.14);
   border-left: 1px solid rgba(250, 250, 250, 0.14);
+  transform: translateZ(22px);
 }
 
 .signal-card {
@@ -367,18 +383,18 @@ nav a:hover,
   border-bottom: 1px solid rgba(250, 250, 250, 0.14);
   background: rgba(255, 255, 255, 0.025);
   transition:
+    background 180ms ease,
     border-color 180ms ease,
     transform 180ms ease;
 }
 
-.signal-card span {
-  color: #93c5fd;
-  font-size: 0.78rem;
-  font-weight: 900;
+.signal-card:hover {
+  background: rgba(96, 165, 250, 0.1);
+  transform: translateY(-2px);
 }
 
 .signal-card h2 {
-  margin: 16px 0 5px;
+  margin: 0 0 7px;
   color: #ffffff;
   font-family: var(--heading);
   font-size: clamp(0.98rem, 1.2vw, 1.16rem);
@@ -397,6 +413,7 @@ nav a:hover,
   display: grid;
   gap: 0;
   border-top: 1px solid rgba(250, 250, 250, 0.14);
+  transform: translateZ(18px);
 }
 
 .pipeline div {
@@ -408,10 +425,6 @@ nav a:hover,
   padding: 0;
   border-bottom: 1px solid rgba(250, 250, 250, 0.14);
   background: transparent;
-}
-
-.pipeline strong {
-  color: #93c5fd;
 }
 
 .intro {
@@ -578,7 +591,6 @@ nav a:hover,
 }
 
 .project-card,
-.capability-card,
 .timeline-item,
 .stack-row {
   border: 1px solid var(--border);
@@ -612,7 +624,6 @@ nav a:hover,
 }
 
 .project-card h3,
-.capability-card h3,
 .timeline-item h3,
 .stack-row h3 {
   margin: 10px 0 0;
@@ -649,7 +660,6 @@ nav a:hover,
 }
 
 .project-card ul,
-.capability-card ul,
 .stack-row ul {
   display: flex;
   flex-wrap: wrap;
@@ -660,7 +670,6 @@ nav a:hover,
 }
 
 .project-card li,
-.capability-card li,
 .capability-feature li,
 .stack-row li {
   padding: 7px 10px;
@@ -788,30 +797,6 @@ nav a:hover,
   list-style: none;
 }
 
-.capability-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.capability-card {
-  padding: 26px;
-}
-
-.capability-card h3 {
-  margin-top: 0;
-  font-size: 1.28rem;
-}
-
-.capability-card p {
-  color: var(--muted);
-  line-height: 1.62;
-}
-
-.capability-card ul {
-  margin-top: 22px;
-}
-
 .timeline {
   display: grid;
   gap: 0;
@@ -916,27 +901,32 @@ nav a:hover,
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.58);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.64);
+  backdrop-filter: blur(10px);
 }
 
 .contact-modal {
   position: relative;
-  width: min(560px, 100%);
-  padding: clamp(24px, 4vw, 36px);
+  width: min(680px, 100%);
+  padding: 0;
   border: 1px solid var(--border);
   border-radius: 4px;
-  background:
-    linear-gradient(135deg, var(--accent-soft), transparent 38%),
-    var(--surface);
-  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.36);
+  background: var(--surface);
+  box-shadow: 14px 14px 0 rgba(96, 165, 250, 0.1);
   animation: modal-in 180ms ease both;
 }
 
+.modal-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px;
+  gap: 24px;
+  align-items: start;
+  padding: clamp(24px, 4vw, 36px);
+  border-bottom: 1px solid var(--border);
+}
+
 .modal-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
+  position: static;
   display: inline-grid;
   place-items: center;
   width: 42px;
@@ -973,29 +963,37 @@ nav a:hover,
   line-height: 0.98;
 }
 
-.contact-modal div > span {
+.modal-description {
   display: block;
-  margin-top: 16px;
+  margin: 0;
+  padding: 22px clamp(24px, 4vw, 36px) 0;
   color: var(--muted);
   line-height: 1.6;
+  text-transform: none;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .modal-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 28px;
+  gap: 0;
+  margin-top: 24px;
+  border-top: 1px solid var(--border);
 }
 
 .modal-options a,
 .modal-options button {
   display: grid;
-  gap: 8px;
-  min-height: 168px;
-  padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--surface-raised);
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  min-height: 132px;
+  padding: 22px clamp(22px, 3vw, 32px);
+  border: 0;
+  border-right: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
   color: var(--text);
   font-family: var(--body);
   text-align: left;
@@ -1006,8 +1004,8 @@ nav a:hover,
 }
 
 .modal-options a:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
+  background: var(--accent-soft);
+  transform: none;
 }
 
 .modal-options button:disabled {
@@ -1037,11 +1035,14 @@ nav a:hover,
 }
 
 .modal-options strong {
+  display: block;
   font-family: var(--heading);
   font-size: 1.35rem;
 }
 
 .modal-options small {
+  display: block;
+  margin-top: 4px;
   color: var(--muted);
   font-size: 0.88rem;
   line-height: 1.35;
@@ -1054,18 +1055,6 @@ nav a:hover,
 
   to {
     transform: translateY(0);
-  }
-}
-
-@keyframes scan-line {
-  0%,
-  36% {
-    transform: translateX(-100%);
-  }
-
-  64%,
-  100% {
-    transform: translateX(100%);
   }
 }
 
@@ -1117,6 +1106,11 @@ nav a:hover,
 
   .system-panel {
     min-height: 420px;
+    transform: none;
+  }
+
+  .system-panel::before {
+    display: none;
   }
 
   .project-grid {
@@ -1135,9 +1129,6 @@ nav a:hover,
     justify-items: start;
   }
 
-  .capability-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 560px) {
@@ -1201,16 +1192,14 @@ nav a:hover,
     font-size: 1rem;
   }
 
-  .capability-grid {
-    grid-template-columns: 1fr;
-  }
-
   .modal-options {
     grid-template-columns: 1fr;
   }
 
   .modal-options a,
   .modal-options button {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
     min-height: 138px;
   }
 }

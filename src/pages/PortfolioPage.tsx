@@ -31,6 +31,21 @@ export function PortfolioPage() {
   const projectPageCount = projectPages.length
   const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pageContent.modal.whatsappMessage)}`
 
+  useEffect(() => {
+    if (window.location.hash) {
+      return
+    }
+
+    const previousScrollRestoration = window.history.scrollRestoration
+    window.history.scrollRestoration = 'manual'
+    const frameId = window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0 }))
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.history.scrollRestoration = previousScrollRestoration
+    }
+  }, [])
+
   const changeLanguage = (nextLanguage: Language) => {
     setLanguage(nextLanguage)
     setProjectPage(0)

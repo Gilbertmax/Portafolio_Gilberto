@@ -17,16 +17,20 @@ export function ContactModal({ content, whatsappHref, onClose }: ContactModalPro
         aria-describedby="contact-modal-copy"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <button className="modal-close" type="button" aria-label={content.modal.close} onClick={onClose}>
-          <svg aria-hidden="true" viewBox="0 0 24 24">
-            <path d="m6 6 12 12M18 6 6 18" />
-          </svg>
-        </button>
-        <div>
-          <p>{content.contactLabel}</p>
-          <h2 id="contact-modal-title">{content.modal.title}</h2>
-          <span id="contact-modal-copy">{content.modal.text}</span>
+        <div className="modal-copy">
+          <div>
+            <p>{content.contactLabel}</p>
+            <h2 id="contact-modal-title">{content.modal.title}</h2>
+          </div>
+          <button className="modal-close" type="button" aria-label={content.modal.close} onClick={onClose}>
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
         </div>
+        <p className="modal-description" id="contact-modal-copy">
+          {content.modal.text}
+        </p>
         <div className="modal-options">
           <a href={`mailto:${content.email}?subject=${encodeURIComponent(content.modal.subject)}`} onClick={onClose}>
             <span aria-hidden="true">

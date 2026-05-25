@@ -20,18 +20,16 @@ export function SystemPanel({ content, language }: SystemPanelProps) {
         </div>
       </div>
       <div className="signal-grid">
-        {content.systemCards.map((card, index) => (
+        {content.systemCards.map((card) => (
           <article className="signal-card" key={card.title}>
-            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <h2>{card.title}</h2>
             <p>{card.detail}</p>
           </article>
         ))}
       </div>
       <div className="pipeline">
-        {content.pipeline.map((item, index) => (
+        {content.pipeline.map((item) => (
           <div key={item}>
-            <strong>{String(index + 1).padStart(2, '0')}</strong>
             <span>{item}</span>
           </div>
         ))}
