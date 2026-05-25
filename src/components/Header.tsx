@@ -14,8 +14,11 @@ export function Header({ content, language, theme, onLanguageChange, onThemeTogg
     <header className="site-header" aria-label={content.aria.nav}>
       <div className="header-frame">
         <a className="brand" href="#top" aria-label="Gilberto Gonzalez home">
-          <span className="brand-mark" aria-hidden="true">
-            GG
+          <span className="brand-portrait" aria-hidden="true">
+            <span className="brand-image-frame">
+              <img src="/yo.png" alt="" />
+            </span>
+            <span className="brand-initials">GG</span>
           </span>
           <span className="brand-copy">
             <strong>Gilberto Gonzalez</strong>
