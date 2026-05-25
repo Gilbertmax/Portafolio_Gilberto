@@ -136,6 +136,11 @@
   min-width: 238px;
 }
 
+.mobile-menu-toggle,
+.mobile-menu-tools {
+  display: none;
+}
+
 .primary-nav a,
 .contact-links a {
   color: var(--muted);
@@ -1145,11 +1150,11 @@
 }
 
 .reveal-ready [data-reveal='left'] {
-  transform: translate3d(-34px, 0, 0);
+  transform: translate3d(0, 30px, 0);
 }
 
 .reveal-ready [data-reveal='right'] {
-  transform: translate3d(34px, 0, 0);
+  transform: translate3d(0, 30px, 0);
 }
 
 .reveal-ready [data-reveal].is-visible {
@@ -1193,8 +1198,9 @@
   }
 
   .header-frame {
+    position: relative;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 10px 12px;
     padding: 10px;
   }
 
@@ -1203,11 +1209,111 @@
     min-width: 0;
   }
 
+  .brand {
+    flex: 1 1 auto;
+  }
+
+  .header-controls {
+    flex: 0 0 auto;
+  }
+
+  .mobile-menu-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+    border-radius: 5px;
+    background: var(--surface-raised);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 0.84rem;
+    font-weight: 800;
+  }
+
+  .mobile-menu-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 2;
+    transition: transform 180ms ease;
+  }
+
+  .site-header[data-menu-open='true'] .mobile-menu-toggle svg {
+    transform: rotate(90deg);
+  }
+
   .primary-nav {
     order: 3;
-    width: 100%;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: flex-start;
+    gap: 0;
+    width: 100%;
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    border-color: transparent;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      max-height 260ms ease,
+      opacity 180ms ease,
+      padding 220ms ease,
+      border-color 220ms ease,
+      transform 220ms ease;
+  }
+
+  .site-header[data-menu-open='true'] .primary-nav {
+    max-height: 420px;
+    padding: 8px;
+    border-color: color-mix(in srgb, var(--border) 78%, transparent);
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .primary-nav a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 0 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 68%, transparent);
+    border-radius: 3px;
+    font-size: 0.95rem;
+  }
+
+  .primary-nav a:last-of-type {
+    border-bottom: 0;
+  }
+
+  .mobile-menu-tools {
+    display: flex;
+    gap: 8px;
+    padding: 10px 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--border) 68%, transparent);
+  }
+
+  .mobile-menu-tools button {
+    flex: 1;
+    min-height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--body);
+    font-weight: 800;
+  }
+
+  .mobile-menu-tools button[aria-pressed='true'] {
+    background: var(--text);
+    color: var(--background);
   }
 
   .hero,
@@ -1227,10 +1333,12 @@
 
   .system-panel {
     min-height: 420px;
+    overflow: hidden;
     transform: none;
   }
 
-  .system-panel::before {
+  .system-panel::before,
+  .system-panel::after {
     display: none;
   }
 
@@ -1254,15 +1362,18 @@
 
 @media (max-width: 560px) {
   .site-header {
-    position: static;
+    position: sticky;
+    padding: 8px;
   }
 
   .header-frame {
-    align-items: start;
+    align-items: center;
+    gap: 10px;
   }
 
   .brand {
-    min-width: 44px;
+    flex: 1 1 54px;
+    min-width: 54px;
   }
 
   .brand-copy {
@@ -1274,16 +1385,41 @@
   }
 
   .language-switcher {
-    width: max-content;
+    display: none;
   }
 
-  .primary-nav {
-    gap: 3px;
+  .theme-toggle {
+    width: 86px;
+    height: 44px;
   }
 
-  .primary-nav a {
-    padding: 8px 9px;
-    font-size: 0.82rem;
+  .theme-toggle-thumb {
+    width: 34px;
+    height: 34px;
+  }
+
+  .theme-toggle[data-theme-state='dark'] .theme-toggle-thumb {
+    transform: translateX(42px);
+  }
+
+  .sun-cloud-icon,
+  .moon-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .mobile-menu-toggle {
+    width: 46px;
+    padding: 0;
+  }
+
+  .mobile-menu-toggle span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 
   .section-shell {

@@ -56,12 +56,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   min-width: 320px;
   min-height: 100svh;
   margin: 0;
+  overflow-x: clip;
   background: var(--body-layer), var(--background);
   background-size: 120px 100%, auto;
   background-attachment: fixed;
