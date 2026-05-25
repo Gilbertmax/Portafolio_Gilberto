@@ -25,6 +25,15 @@ const content = {
       'I design and build scalable web platforms, AI-assisted workflows, automation tools, SaaS foundations and production cloud applications for teams that need software to move operational and financial data with precision.',
     primaryCta: 'Start a conversation',
     cvCta: 'Download English CV',
+    modal: {
+      title: 'How would you like to talk?',
+      text: 'Choose the channel that works best for you. Email is ready; WhatsApp needs your number to activate the direct link.',
+      email: 'Send email',
+      whatsapp: 'WhatsApp',
+      whatsappPending: 'Add phone number',
+      close: 'Close dialog',
+      subject: 'Portfolio conversation',
+    },
     profileHighlights: [
       {
         label: 'Product to production',
@@ -218,6 +227,15 @@ const content = {
       'Diseño y construyo plataformas web escalables, flujos asistidos por IA, herramientas de automatización, bases SaaS y aplicaciones cloud en producción para equipos que necesitan mover datos operativos y financieros con precisión.',
     primaryCta: 'Iniciar conversación',
     cvCta: 'Descargar CV en español',
+    modal: {
+      title: '¿Cómo prefieres hablar?',
+      text: 'Elige el canal que te funcione mejor. Email ya está listo; para WhatsApp necesito tu número para activar el enlace directo.',
+      email: 'Enviar email',
+      whatsapp: 'WhatsApp',
+      whatsappPending: 'Agregar número',
+      close: 'Cerrar diálogo',
+      subject: 'Conversación desde portafolio',
+    },
     profileHighlights: [
       {
         label: 'De producto a producción',
@@ -404,6 +422,7 @@ function App() {
   const [projectPage, setProjectPage] = useState(0)
   const [capabilityIndex, setCapabilityIndex] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
   const t = content[language]
   const projectPageSize = 2
   const projectPages = useMemo(() => {
@@ -443,6 +462,21 @@ function App() {
 
     return () => window.clearInterval(intervalId)
   }, [isCarouselPaused, projectPageCount])
+
+  useEffect(() => {
+    if (!isContactOpen) {
+      return
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsContactOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isContactOpen])
 
   return (
     <>
@@ -507,9 +541,9 @@ function App() {
             <h1>{t.name}</h1>
             <p className="hero-text">{t.hero}</p>
             <div className="hero-actions" aria-label={t.aria.actions}>
-              <a className="button button-primary" href={`mailto:${t.email}`}>
+              <button className="button button-primary" type="button" onClick={() => setIsContactOpen(true)}>
                 {t.primaryCta}
-              </a>
+              </button>
               <a className="button button-secondary" href={cvLinks[language]}>
                 {t.cvCta}
               </a>
@@ -732,6 +766,9 @@ function App() {
             <h2>{t.contactTitle}</h2>
           </div>
           <div className="contact-links">
+            <button type="button" onClick={() => setIsContactOpen(true)}>
+              {t.primaryCta}
+            </button>
             <a href={`mailto:${t.email}`}>{t.email}</a>
             <a href="https://linkedin.com/in/gilbertoglez" target="_blank" rel="noreferrer">
               {t.linkedin}
@@ -740,6 +777,60 @@ function App() {
           </div>
         </section>
       </main>
+
+      {isContactOpen && (
+        <div className="modal-backdrop" role="presentation" onMouseDown={() => setIsContactOpen(false)}>
+          <section
+            className="contact-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
+            aria-describedby="contact-modal-copy"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button
+              className="modal-close"
+              type="button"
+              aria-label={t.modal.close}
+              onClick={() => setIsContactOpen(false)}
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="m6 6 12 12M18 6 6 18" />
+              </svg>
+            </button>
+            <div>
+              <p>{t.contactLabel}</p>
+              <h2 id="contact-modal-title">{t.modal.title}</h2>
+              <span id="contact-modal-copy">{t.modal.text}</span>
+            </div>
+            <div className="modal-options">
+              <a
+                href={`mailto:${t.email}?subject=${encodeURIComponent(t.modal.subject)}`}
+                onClick={() => setIsContactOpen(false)}
+              >
+                <span aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 6h16v12H4z" />
+                    <path d="m4 7 8 6 8-6" />
+                  </svg>
+                </span>
+                <strong>{t.modal.email}</strong>
+                <small>{t.email}</small>
+              </a>
+              <button type="button" disabled>
+                <span aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M7.5 19.5 4 20l.7-3.2A8.2 8.2 0 1 1 8 20.1z" />
+                    <path d="M9 8.7c.4 3.1 2.2 5 5.3 5.6l1.2-1.2 2.1.6c.4.1.7.5.6 1l-.3 1.7c-.1.5-.5.8-1 .8-5.6-.2-10-4.5-10.2-10.2 0-.5.3-.9.8-1l1.7-.3c.5-.1.9.2 1 .6l.6 2.1z" />
+                  </svg>
+                </span>
+                <strong>{t.modal.whatsapp}</strong>
+                <small>{t.modal.whatsappPending}</small>
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </>
   )
 }
