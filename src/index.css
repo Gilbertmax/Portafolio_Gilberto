@@ -1,22 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  --background: #f7f8fc;
+  --background: #f4f5f7;
   --surface: #ffffff;
-  --surface-raised: rgba(255, 255, 255, 0.86);
+  --surface-raised: #ffffff;
   --text: #09090b;
-  --muted: #3f3f46;
-  --border: #d9d9de;
-  --accent: #2563eb;
-  --accent-soft: rgba(37, 99, 235, 0.09);
-  --header-bg: rgba(247, 248, 252, 0.82);
-  --panel-bg: linear-gradient(180deg, #18181b, #09090b);
-  --panel-card: rgba(250, 250, 250, 0.06);
-  --chip-bg: #ffffff;
+  --muted: #4b5563;
+  --border: #cfd4dc;
+  --accent: #1d4ed8;
+  --accent-soft: #e8eefc;
+  --header-bg: rgba(244, 245, 247, 0.9);
+  --panel-bg: #0d1422;
+  --panel-card: rgba(255, 255, 255, 0.07);
+  --chip-bg: #f8fafc;
   --body-layer:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(247, 248, 252, 0.64) 46%, rgba(255, 255, 255, 0.86) 100%),
-    linear-gradient(125deg, rgba(37, 99, 235, 0.12) 0%, transparent 32%, rgba(9, 9, 11, 0.055) 72%, transparent 100%),
-    linear-gradient(55deg, transparent 0%, rgba(14, 165, 233, 0.08) 48%, transparent 82%);
+    linear-gradient(90deg, rgba(9, 9, 11, 0.045) 0 1px, transparent 1px 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(244, 245, 247, 0.96));
   --heading: 'Archivo', system-ui, sans-serif;
   --body: 'Space Grotesk', system-ui, sans-serif;
 
@@ -32,22 +31,21 @@
 }
 
 :root[data-theme='dark'] {
-  --background: #07080d;
-  --surface: #11131a;
-  --surface-raised: rgba(17, 19, 26, 0.84);
-  --text: #f8fafc;
-  --muted: #c7cedb;
-  --border: #2a3140;
+  --background: #080b10;
+  --surface: #10151d;
+  --surface-raised: #121923;
+  --text: #f5f7fb;
+  --muted: #b8c0cc;
+  --border: #2b3442;
   --accent: #60a5fa;
-  --accent-soft: rgba(96, 165, 250, 0.13);
-  --header-bg: rgba(7, 8, 13, 0.78);
-  --panel-bg: linear-gradient(180deg, #111827, #030712);
+  --accent-soft: rgba(96, 165, 250, 0.12);
+  --header-bg: rgba(8, 11, 16, 0.9);
+  --panel-bg: #0e1726;
   --panel-card: rgba(255, 255, 255, 0.075);
   --chip-bg: rgba(255, 255, 255, 0.06);
   --body-layer:
-    linear-gradient(180deg, rgba(7, 8, 13, 0.9) 0%, rgba(12, 16, 27, 0.86) 45%, rgba(7, 8, 13, 0.96) 100%),
-    linear-gradient(125deg, rgba(96, 165, 250, 0.22) 0%, transparent 34%, rgba(45, 212, 191, 0.12) 62%, transparent 100%),
-    linear-gradient(55deg, rgba(255, 255, 255, 0.035) 0%, transparent 36%, rgba(96, 165, 250, 0.08) 80%);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 100%),
+    linear-gradient(180deg, #080b10, #0b1018 48%, #080b10);
 
   color-scheme: dark;
 }
@@ -65,6 +63,7 @@ body {
   min-height: 100svh;
   margin: 0;
   background: var(--body-layer), var(--background);
+  background-size: 120px 100%, auto;
   background-attachment: fixed;
 }
 
