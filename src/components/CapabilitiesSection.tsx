@@ -12,11 +12,11 @@ export function CapabilitiesSection({ content, language, capabilityIndex, onCapa
 
   return (
     <section className="section-shell section-block" id="capabilities">
-      <div className="section-heading">
+      <div className="section-heading" data-reveal="up">
         <span>{content.capabilitiesLabel}</span>
         <h2>{content.capabilitiesTitle}</h2>
       </div>
-      <div className="capability-showcase">
+      <div className="capability-showcase" data-reveal="up">
         <div className="capability-rail" aria-label={language === 'en' ? 'Capability selector' : 'Selector de capacidades'}>
           {content.capabilities.map((capability, index) => (
             <button

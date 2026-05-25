@@ -9,6 +9,7 @@ import { ProfileHighlights } from '../components/ProfileHighlights'
 import { ProjectCarousel } from '../components/ProjectCarousel'
 import { StackSection } from '../components/StackSection'
 import { content, cvLinks, whatsappNumber } from '../data/portfolioContent'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import type { Language, Project, Theme } from '../types/portfolio'
 
 const projectPageSize = 2
@@ -30,6 +31,8 @@ export function PortfolioPage() {
   }, [pageContent.projects])
   const projectPageCount = projectPages.length
   const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pageContent.modal.whatsappMessage)}`
+
+  useScrollReveal(language)
 
   useEffect(() => {
     if (window.location.hash) {

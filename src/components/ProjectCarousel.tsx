@@ -21,7 +21,7 @@ export function ProjectCarousel({
 }: ProjectCarouselProps) {
   return (
     <section className="section-shell section-block" id="work">
-      <div className="section-heading section-heading-with-controls">
+      <div className="section-heading section-heading-with-controls" data-reveal="up">
         <div>
           <span>{content.workLabel}</span>
           <h2>{content.workTitle}</h2>
@@ -56,6 +56,7 @@ export function ProjectCarousel({
       <div
         className="project-carousel"
         aria-live="polite"
+        data-reveal="up"
         onMouseEnter={() => onPauseChange(true)}
         onMouseLeave={() => onPauseChange(false)}
         onFocus={() => onPauseChange(true)}

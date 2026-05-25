@@ -9,11 +9,11 @@ type ContactSectionProps = {
 export function ContactSection({ content, cvLink, onContactOpen }: ContactSectionProps) {
   return (
     <section className="contact section-shell" id="contact">
-      <div>
+      <div data-reveal="left">
         <span>{content.contactLabel}</span>
         <h2>{content.contactTitle}</h2>
       </div>
-      <div className="contact-links">
+      <div className="contact-links" data-reveal="right">
         <button type="button" onClick={onContactOpen}>
           {content.primaryCta}
         </button>

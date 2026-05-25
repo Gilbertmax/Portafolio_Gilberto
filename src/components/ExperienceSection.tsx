@@ -7,13 +7,13 @@ type ExperienceSectionProps = {
 export function ExperienceSection({ content }: ExperienceSectionProps) {
   return (
     <section className="section-shell section-block" id="experience">
-      <div className="section-heading">
+      <div className="section-heading" data-reveal="up">
         <span>{content.experienceLabel}</span>
         <h2>{content.experienceTitle}</h2>
       </div>
       <div className="timeline">
         {content.experience.map((item) => (
-          <article className="timeline-item" key={`${item.company}-${item.role}`}>
+          <article className="timeline-item" key={`${item.company}-${item.role}`} data-reveal="up">
             <div>
               <h3>{item.role}</h3>
               <p>{item.company}</p>
