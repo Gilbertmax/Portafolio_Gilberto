@@ -12,8 +12,6 @@ import { content, cvLinks, whatsappNumber } from '../data/portfolioContent'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import type { Language, Project, Theme } from '../types/portfolio'
 
-const projectPageSize = 2
-
 export function PortfolioPage() {
   const [language, setLanguage] = useState<Language>('en')
   const [theme, setTheme] = useState<Theme>('dark')
@@ -21,6 +19,7 @@ export function PortfolioPage() {
   const [capabilityIndex, setCapabilityIndex] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
+  const [projectPageSize, setProjectPageSize] = useState(2)
 
   const pageContent = content[language]
   const cvLink = cvLinks[language]
@@ -28,7 +27,7 @@ export function PortfolioPage() {
     return Array.from({ length: Math.ceil(pageContent.projects.length / projectPageSize) }, (_, pageIndex) =>
       pageContent.projects.slice(pageIndex * projectPageSize, pageIndex * projectPageSize + projectPageSize),
     )
-  }, [pageContent.projects])
+  }, [pageContent.projects, projectPageSize])
   const projectPageCount = projectPages.length
   const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(pageContent.modal.whatsappMessage)}`
 
@@ -47,6 +46,20 @@ export function PortfolioPage() {
       window.cancelAnimationFrame(frameId)
       window.history.scrollRestoration = previousScrollRestoration
     }
+  }, [])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 900px)')
+
+    const updateProjectPageSize = () => {
+      setProjectPageSize(mediaQuery.matches ? 1 : 2)
+      setProjectPage(0)
+    }
+
+    updateProjectPageSize()
+    mediaQuery.addEventListener('change', updateProjectPageSize)
+
+    return () => mediaQuery.removeEventListener('change', updateProjectPageSize)
   }, [])
 
   const changeLanguage = (nextLanguage: Language) => {
