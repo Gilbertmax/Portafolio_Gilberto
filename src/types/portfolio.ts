@@ -92,4 +92,5 @@ export type PortfolioContent = {
   contactTitle: string
   email: string
   linkedin: string
+  github: string
 }

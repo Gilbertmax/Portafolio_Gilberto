@@ -21,6 +21,9 @@ export function ContactSection({ content, cvLink, onContactOpen }: ContactSectio
         <a href="https://linkedin.com/in/gilbertoglez" target="_blank" rel="noreferrer">
           {content.linkedin}
         </a>
+        <a href="https://github.com/Gilbertmax" target="_blank" rel="noreferrer">
+          {content.github}
+        </a>
         <a href={cvLink}>{content.cvCta}</a>
       </div>
     </section>

@@ -221,6 +221,7 @@ export const content: Record<Language, PortfolioContent> = {
     contactTitle: "Let's build a system that earns its place in production.",
     email: 'gilbertoglez1999@hotmail.com',
     linkedin: 'linkedin.com/in/gilbertoglez',
+    github: 'github.com/Gilbertmax',
   },
   es: {
     skip: 'Saltar al contenido',
@@ -435,5 +436,6 @@ export const content: Record<Language, PortfolioContent> = {
     contactTitle: 'Construyamos un sistema que se gane su lugar en producción.',
     email: 'gilbertoglez1999@hotmail.com',
     linkedin: 'linkedin.com/in/gilbertoglez',
+    github: 'github.com/Gilbertmax',
   },
 }
